@@ -6,7 +6,7 @@
 
 	Aluno: Lucas Araujo Pena - 13/0056162
 
-	Trabalho 2 
+	Trabalho 2
 
 	Sistema Operacional: Windows 7
 	Compilador: C++ do Visual Studio 2019
@@ -25,7 +25,7 @@ typedef struct Vetor {
 } tVetorDisciplinas;
 
 // Estrutura do elemento da lista de adjacencia
-struct elementoListAdj{
+struct elementoListAdj {
 	int id;
 	char codigo[10];
 	char nome[50];
@@ -96,7 +96,7 @@ void carregarDados(FILE* arquivo, int pNumeroVertices, tVetorDisciplinas* discip
 struct Grafo* criarGrafo(int pNumeroVertices);
 
 //Funcao para carregar as informacoes do grafo criado
-void inicializarGrafo(struct Grafo* Grafo, tVetorDisciplinas *disciplinas);
+void inicializarGrafo(struct Grafo* Grafo, tVetorDisciplinas* disciplinas);
 
 //Funcao que cria novo no na lista de adjacencias
 struct elementoListAdj* adicionarElemento(int id, char* nome, char* codigo);
@@ -108,7 +108,7 @@ void inserirAresta(struct Grafo* Grafo, int origem, int id, char* nome, char* co
 int retornaId(char* codigo, tVetorDisciplinas* disciplinas, int pNumeroVertices);
 
 //Funcao que percorre o arquivo txt e adiciona os elementos
-void preencherGrafo(FILE* arquivo, tVetorDisciplinas * disciplinas, struct Grafo* Grafo);
+void preencherGrafo(FILE* arquivo, tVetorDisciplinas* disciplinas, struct Grafo* Grafo);
 
 //Funcao para imprimir a lista de adjacencia e seus elementos
 void imprimirGrafo(struct Grafo* Grafo);
@@ -125,7 +125,7 @@ void caminhoCritico(struct Grafo* Grafo, t_lista* listaTopologica, int* vetorDis
 
 //Funcao principal do programa
 int main() {
-	int vNumeroVertices = 0, i;
+	int vNumeroVertices = 0;
 	FILE* arquivo;
 	t_lista* listaZero = criarLista();
 	t_lista* listaTopologica = criarLista();
@@ -133,7 +133,7 @@ int main() {
 	printf("Teoria e Aplicacao de Grafos - Projeto 2 \n\n");
 
 	numeroVertices(arquivo, &vNumeroVertices);
-	
+
 	tVetorDisciplinas disciplinas[vNumeroVertices];
 	int vetorGrau[vNumeroVertices];
 	int vetorDistancia[vNumeroVertices];
@@ -153,7 +153,7 @@ int main() {
 t_lista* criarLista() {
 	t_lista* lista = (t_lista*)malloc(sizeof(t_lista));
 
-	if (lista != NULL)	{
+	if (lista != NULL) {
 		lista->inicio = NULL;
 		lista->fim = NULL;
 	}
@@ -162,7 +162,7 @@ t_lista* criarLista() {
 }
 
 int estaVazia(t_lista* lista) {
-	if (lista->inicio == NULL)	{
+	if (lista->inicio == NULL) {
 		return 1;
 	}
 
@@ -172,8 +172,8 @@ int estaVazia(t_lista* lista) {
 void liberaLista(t_lista* lista) {
 	if (lista->inicio != NULL) {
 		t_elemento* removido;
-		
-		while (lista -> inicio != NULL ) {
+
+		while (lista->inicio != NULL) {
 			removido = lista->inicio;
 			lista->inicio = lista->inicio->proximo;
 			free(removido);
@@ -207,7 +207,7 @@ int insereFim(int valor, t_lista* lista) {
 	novoUltimo->id = valor;
 	novoUltimo->proximo = NULL;
 
-	if (lista->fim == NULL)	{
+	if (lista->fim == NULL) {
 		lista->inicio = novoUltimo;
 		lista->fim = novoUltimo;
 	}
@@ -286,7 +286,7 @@ void numeroVertices(FILE* arquivo, int* pNumeroVertices) {
 	*pNumeroVertices = count;
 }
 
-void carregaDados(FILE* arquivo, int pNumeroVertices, tVetorDisciplinas* disciplinas) {
+void carregarDados(FILE* arquivo, int pNumeroVertices, tVetorDisciplinas* disciplinas) {
 	int i, j, k;
 	char string[300], aux[300], caractere;
 
@@ -305,7 +305,7 @@ void carregaDados(FILE* arquivo, int pNumeroVertices, tVetorDisciplinas* discipl
 		aux[0] = "\0";
 
 		//Este while varre a string até encontrar o caractere '|', que separa os dados
-		while (string[j] != 0x7c){
+		while (string[j] != 0x7c) {
 			caractere = string[j];
 
 			if (isdigit(caractere)) {
@@ -366,18 +366,18 @@ void carregaDados(FILE* arquivo, int pNumeroVertices, tVetorDisciplinas* discipl
 	fclose(arquivo);
 }
 
-struct Grafo* criarGrafo(int pNumeroVertices){
+struct Grafo* criarGrafo(int pNumeroVertices) {
 	int i;
 
 	struct Grafo* Grafo = (struct Grafo*)malloc(sizeof(struct Grafo));
 	Grafo->numeroArestas = 0;
 	Grafo->numeroVertices = pNumeroVertices;
 	Grafo->grau = 0;
-	
-	//Criacao do vetor de listas de adjacencias
-	Grafo->vetorAdj = (struct listaAdj*)malloc(pNumeroVertices* sizeof(struct listaAdj));
 
-	for (i = 0; i < pNumeroVertices; ++i){
+	//Criacao do vetor de listas de adjacencias
+	Grafo->vetorAdj = (struct listaAdj*)malloc(pNumeroVertices * sizeof(struct listaAdj));
+
+	for (i = 0; i < pNumeroVertices; ++i) {
 		Grafo->vetorAdj[i].inicio = NULL;
 		Grafo->vetorAdj[i].grauEntrada = 0;
 		Grafo->vetorAdj[i].grauSaida = 0;
@@ -427,7 +427,7 @@ int retornaId(char* codigo, tVetorDisciplinas* disciplinas, int pNumeroVertices)
 	int i;
 
 	for (i = 0; i < pNumeroVertices; i++) {
-		if (strcmp(disciplinas[i].codigo, codigo) == 0)	{
+		if (strcmp(disciplinas[i].codigo, codigo) == 0) {
 			return i;
 		}
 	}
@@ -496,8 +496,8 @@ void preencherGrafo(FILE* arquivo, tVetorDisciplinas* disciplinas, struct Grafo*
 }
 
 void imprimirGrafo(struct Grafo* Grafo) {
-	int v, j, grau;
-	struct elementListAdj* vertice = Grafo->vetorAdj[v].inicio;
+	int v = 1, j, grau;
+	struct elementoListAdj* vertice = Grafo->vetorAdj[v].inicio;
 
 	printf("Dados do grafo\nNumero de Vertices: %d\tNumero de Arestas: %d \n", Grafo->numeroVertices, Grafo->numeroArestas);
 	printf("Grau do Grafo: %d \n\n", Grafo->grau);
@@ -507,7 +507,7 @@ void imprimirGrafo(struct Grafo* Grafo) {
 
 	grau = Grafo->grau;
 
-	for (v = 0; v < Grafo->numeroVertices; ++v)	{
+	for (v = 0; v < Grafo->numeroVertices; ++v) {
 		for (j = 0; j < Grafo->numeroVertices; j++) {
 			vertice = Grafo->vetorAdj[j].inicio;
 
@@ -548,7 +548,7 @@ void preencherListaZero(struct Grafo* Grafo, t_lista* listaZero, int* vetorGrau)
 }
 
 //Imprime a lista contendo a ordenacao topologica do grafo
-void imprimirListaTopologica(struct Grafo* Grafo, t_lista* listaTopologica){
+void imprimirListaTopologica(struct Grafo* Grafo, t_lista* listaTopologica) {
 	t_elemento* tmp = listaTopologica->inicio;
 	int i;
 
@@ -570,7 +570,7 @@ void ordenacaoTopologica(struct Grafo* Grafo, t_lista* listaZero, t_lista* lista
 		count++;
 		insereFim(id, listaTopologica);
 
-		if (Grafo->vetorAdj[id].grauSaida != 0)	{
+		if (Grafo->vetorAdj[id].grauSaida != 0) {
 			tmp = Grafo->vetorAdj[id].inicio;
 
 			while (tmp) {
@@ -603,7 +603,7 @@ int criarCaminho(struct Grafo* Grafo, int origem, int destino, int* caminho, int
 
 	caminho[origem] = 1;
 
-	for (tmp = Grafo->vetorAdj[origem].inicio; tmp != NULL; tmp = tmp->proximo)	{
+	for (tmp = Grafo->vetorAdj[origem].inicio; tmp != NULL; tmp = tmp->proximo) {
 		if (caminho[tmp->id == 0]) {
 			maxPesoRetorno = criarCaminho(Grafo, tmp->id, destino, caminho, sequencia + 1);
 
@@ -619,19 +619,21 @@ int criarCaminho(struct Grafo* Grafo, int origem, int destino, int* caminho, int
 	return maxPeso;
 }
 
-void caminhoCritico(struct Grafo* Grafo, t_lista* listaTopologica, int* vetorDistancia) {
+void caminhoCritico(struct Grafo* Grafo, t_lista * listaTopologica, int* vetorDistancia) {
 
 	int i, id, j, verticeInicio = 0, verticeFim = 0, aux = 0;
 	struct listaAdj* vertice;
 	struct elementoListAdj* tmp;
 	t_elemento* elem;
-	int caminho[Grafo->numeroVertices], controle = 0;
+	int index = Grafo->numeroVertices;
+		
+	int caminho[index];
 
 	for (j = 0; j < Grafo->numeroVertices; j++) {
 		id = j;
 
 		//Inicializacao do vetor de distancias
-		for (i = 0; i < Grafo->numeroVertices; i++)	{
+		for (i = 0; i < Grafo->numeroVertices; i++) {
 			vetorDistancia[i] = -1;
 		}
 
@@ -639,7 +641,7 @@ void caminhoCritico(struct Grafo* Grafo, t_lista* listaTopologica, int* vetorDis
 		vetorDistancia[id] = 0;
 
 		for (i = 0; i < Grafo->numeroVertices; i++) {
-			if (vetorDistancia[elem->id] != -1)	{
+			if (vetorDistancia[elem->id] != -1) {
 				for (tmp = Grafo->vetorAdj[elem->id].inicio; tmp != NULL; tmp = tmp->proximo) {
 					if (vetorDistancia[elem->id] + Grafo->vetorAdj[elem->id].peso > vetorDistancia[tmp->id]) {
 						if (vetorDistancia[tmp->id] != -1) {
@@ -666,7 +668,7 @@ void caminhoCritico(struct Grafo* Grafo, t_lista* listaTopologica, int* vetorDis
 	}
 
 	//Inicializacao do Vetor Caminho
-	for (i = 0; i < Grafo->numeroVertices; i++){
+	for (i = 0; i < Grafo->numeroVertices; i++) {
 		caminho[i] = 0;
 	}
 
@@ -676,7 +678,7 @@ void caminhoCritico(struct Grafo* Grafo, t_lista* listaTopologica, int* vetorDis
 	printf("\n\nCaminho critico identificado seguindo a seguinte ordem: \n\n");
 
 	for (i = 0; i < Grafo->numeroVertices; i++) {
-		for (j = 0; j < Grafo->numeroVertices; j++)	{
+		for (j = 0; j < Grafo->numeroVertices; j++) {
 			if (caminho[j] == aux) {
 				printf("| %s - %s | ", Grafo->vetorAdj[j].codigo, Grafo->vetorAdj[j].nome);
 
